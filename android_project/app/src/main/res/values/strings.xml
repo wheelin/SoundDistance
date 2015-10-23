@@ -1,6 +1,15 @@
 <resources>
-    <string name="app_name">SoundDistance</string>
+    <string name="app_name">Sound Distance</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_result_list">Results</string>
+    <string name="title_activity_bt_scan_list">Bluetooth scan</string>
+    <string name="title_activity_measure_choice">Measure choice</string>
+
+    <string name="measure_choice_select_text">Select your measure type :</string>
+    <string name="measure_choice_distance">Distance</string>
+    <string name="measure_choice_surface">Surface</string>
+    <string name="measure_choice_volume">Volume</string>
+    <string name="measure_choice_select_button">Apply</string>
 </resources>
