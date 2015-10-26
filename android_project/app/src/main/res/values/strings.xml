@@ -13,4 +13,6 @@
     <string name="measure_choice_volume">Volume</string>
     <string name="measure_choice_select_button">Apply</string>
     <string name="title_activity_measuring">MeasuringActivity</string>
+    <string name="measuring_activity_title">Measuring</string>
+    <string name="measuring_button_msg">Take measure</string>
 </resources>
