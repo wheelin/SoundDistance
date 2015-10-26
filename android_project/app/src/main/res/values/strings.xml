@@ -7,10 +7,13 @@
     <string name="title_activity_bt_scan_list">Bluetooth scan</string>
     <string name="title_activity_measure_choice">Measure choice</string>
 
-    <string name="measure_choice_select_text">Select your measure type :</string>
+    <string name="measure_choice_select_text">Select your measure's type :</string>
     <string name="measure_choice_distance">Distance</string>
     <string name="measure_choice_surface">Surface</string>
     <string name="measure_choice_volume">Volume</string>
     <string name="measure_choice_select_button">Apply</string>
     <string name="title_activity_measuring">MeasuringActivity</string>
+
+    <string name="result_list_title">Your measures</string>
+    <string name="result_list_button">New measure</string>
 </resources>
