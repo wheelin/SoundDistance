@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_enabled="false">
+        <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+            <gradient
+                android:startColor="@color/button_disable_light"
+                android:centerColor="@color/button_disable_center"
+                android:endColor="@color/button_disable_light"
+                android:angle="90"/>
+            <padding android:left="7dp"
+                android:top="7dp"
+                android:right="7dp"
+                android:bottom="7dp" />
+            <stroke
+                android:width="2dip"
+                android:color="@color/button_border" />
+            <corners android:radius= "8dp" />
+        </shape>
+    </item>
+
+    <item
+        android:state_pressed="true"
+        android:state_enabled="true">
+        <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+            <gradient
+                android:startColor="@color/button_pressed_light"
+                android:centerColor="@color/button_pressed_center"
+                android:endColor="@color/button_pressed_light"
+                android:angle="90"/>
+            <padding android:left="7dp"
+                android:top="7dp"
+                android:right="7dp"
+                android:bottom="7dp" />
+            <stroke
+                android:width="2dip"
+                android:color= "@color/button_border"/>
+            <corners android:radius= "8dp" />
+        </shape>
+    </item>
+
+    <item android:state_enabled="true">
+        <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+            <gradient
+                android:startColor="@color/button_enable_light"
+                android:centerColor="@color/button_enable_center"
+                android:endColor="@color/button_enable_light"
+                android:angle="90"/>
+            <padding android:left="7dp"
+                android:top="7dp"
+                android:right="7dp"
+                android:bottom="7dp" />
+            <stroke
+                android:width="2dip"
+                android:color="@color/button_border" />
+            <corners android:radius= "8dp" />
+        </shape>
+    </item>
+</selector>

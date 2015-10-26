@@ -36,6 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/measure_choice_distance"
+            android:textAppearance="?android:attr/textAppearanceMedium"
             android:id="@+id/radioButton"
             android:layout_gravity="left" />
 
@@ -44,6 +45,7 @@
             android:layout_height="wrap_content"
             android:text="@string/measure_choice_surface"
             android:id="@+id/radioButton2"
+            android:textAppearance="?android:attr/textAppearanceMedium"
             android:layout_gravity="left" />
 
         <RadioButton
@@ -51,6 +53,7 @@
             android:layout_height="wrap_content"
             android:text="@string/measure_choice_volume"
             android:id="@+id/radioButton3"
+            android:textAppearance="?android:attr/textAppearanceMedium"
             android:layout_gravity="left" />
 
     </RadioGroup>
@@ -63,9 +66,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/measure_choice_select_button"
-        android:id="@+id/button"
-        android:layout_gravity="center_horizontal"
-        android:textColor="#ffff"
-        android:background="@drawable/custom_button_orange"/>
+        android:id="@+id/button"/>
 
 </LinearLayout>

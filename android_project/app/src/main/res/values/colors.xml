@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="button_enable_center">#f48b0e</color>
+    <color name="button_enable_light">#ffffc21d</color>
+
+    <color name="button_disable_center">#31000000</color>
+    <color name="button_disable_light">#15000000</color>
+
+    <color name="button_pressed_center">#bbffb821</color>
+    <color name="button_pressed_light">#95f2da10</color>
+
+    <color name="button_border">#ffd46f0e</color>
+</resources>
