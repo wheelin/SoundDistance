@@ -21,7 +21,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/measure_choice_select_text"
         android:id="@+id/textView"
-        android:gravity="center_vertical|center_horizontal" />
+        android:gravity="center_vertical|center_horizontal"/>
 
     <Space
         android:layout_width="20px"
