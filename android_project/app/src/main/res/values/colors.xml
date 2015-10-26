@@ -11,4 +11,7 @@
     <color name="button_pressed_light">#95f2da10</color>
 
     <color name="button_border">#ffd46f0e</color>
+
+    <color name="white">#ffffff</color>
+    <color name="black">#FF000000</color>
 </resources>
