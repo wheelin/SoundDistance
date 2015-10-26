@@ -4,9 +4,12 @@
     <style name="AppTheme" parent="@android:style/Theme.DeviceDefault.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="android:buttonStyle">@style/button</item>
+        <item name="android:textAppearanceLarge">@style/title</item>
     </style>
 
     <style name="button" parent="@android:style/Widget.Button">
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
         <item name="android:gravity">center_vertical|center_horizontal</item>
         <item name="android:textColor">#ffffff</item>
         <item name="android:shadowColor">#FF000000</item>
@@ -19,6 +22,16 @@
         <item name="android:background">@drawable/custom_button</item>
         <item name="android:focusable">false</item>
         <item name="android:clickable">true</item>
+    </style>
+
+    <style name="title" parent="@android:style/TextAppearance.Large">
+        <item name="android:layout_marginTop">15dp</item>
+        <item name="android:layout_marginBottom">15dp</item>
+        <item name="android:gravity">center_vertical|center_horizontal</item>
+        <item name="android:textColor">@color/button_border</item>
+        <item name="android:minHeight">70sp</item>
+        <item name="android:textSize">30sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
 </resources>
