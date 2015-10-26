@@ -28,6 +28,10 @@
             android:name=".MeasureChoiceActivity"
             android:label="@string/title_activity_measure_choice" >
         </activity>
+        <activity
+            android:name=".MeasuringActivity"
+            android:label="@string/title_activity_measuring" >
+        </activity>
     </application>
 
 </manifest>

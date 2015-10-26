@@ -19,7 +19,7 @@ public class Measure {
     private String _measName = "";
     private Calendar _date;
 
-    public Measure(String measName, int measType, int xDim, int yDim, int zDim){
+    public Measure(String measName, int measType, int...dim){
         Calendar c = Calendar.getInstance();
         set_measName(measName);
         set_measureType(measType);
@@ -28,18 +28,29 @@ public class Measure {
                 c.get(Calendar.DAY_OF_MONTH),
                 c.get(Calendar.HOUR),
                 c.get(Calendar.MINUTE));
-        set_xDim(xDim);
-        set_yDim(yDim);
-        set_zDim(zDim);
-        switch (measType){
+        switch (dim.length){
+            case 0:
+                set_xDim(-1);
+                set_yDim(-1);
+                set_zDim(-1);
+                set_mainResult(-1);
             case 1:
-                set_mainResult(xDim);
+                set_xDim(dim[0]);
+                set_yDim(-1);
+                set_zDim(-1);
+                set_mainResult(dim[0]);
                 break;
             case 2:
-                set_mainResult(xDim*yDim);
+                set_xDim(dim[0]);
+                set_yDim(dim[1]);
+                set_zDim(-1);
+                set_mainResult(dim[0]*dim[1]);
                 break;
             case 3:
-                set_mainResult(xDim*yDim*zDim);
+                set_xDim(dim[0]);
+                set_yDim(dim[1]);
+                set_zDim(dim[2]);
+                set_mainResult(dim[0]*dim[1]*dim[2]);
                 break;
         }
     }

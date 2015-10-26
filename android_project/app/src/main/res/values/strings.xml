@@ -12,4 +12,5 @@
     <string name="measure_choice_surface">Surface</string>
     <string name="measure_choice_volume">Volume</string>
     <string name="measure_choice_select_button">Apply</string>
+    <string name="title_activity_measuring">MeasuringActivity</string>
 </resources>
