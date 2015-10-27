@@ -41,6 +41,8 @@ public class FileReadWrite
 	private OutputStream fo;						///< File writer
 	private InputStream fi;							///< File reader
 	private BufferedReader reader;					///< File reader buffer
+
+	public static final String FILE_NAME = "soundDistance.txt";
 	
 	//========================================================================
 	// CLASS FUNCTIONS													 
@@ -150,19 +152,16 @@ public class FileReadWrite
 	public void CreateFile(String fileName)
 	{ 
 		file = new File(Environment.getExternalStorageDirectory() + File.separator + fileName);
-		//line = 0;
-    	try 
-    	{
-			if(file.createNewFile())
-			    Log.d("File_Manager","file created: "+file);
-            else
-                Log.e("File_Manager","File create failed");
-		} 
-    	catch (IOException e) 
-    	{
-    		Log.e("File_Manager","File create failed");
+
+		try {
+			if (file.createNewFile())
+				Log.d("File_Manager", "file created: " + file);
+			else
+				Log.e("File_Manager", "File create failed");
+		} catch (IOException e) {
+			Log.e("File_Manager", "File create failed");
 		}
-    	
+
     	if(file.exists())
     	{
 			try 
@@ -179,7 +178,7 @@ public class FileReadWrite
     	}
 	}
 
-	public void openFile(String fileName)
+	public int openFile(String fileName)
 	{
 		file = new File(Environment.getExternalStorageDirectory() + File.separator + fileName);
 
@@ -191,14 +190,17 @@ public class FileReadWrite
 				fi = new FileInputStream(file);
 
 				reader = new BufferedReader(new InputStreamReader(fi));
+
+				return 1;
 			}
 			catch (FileNotFoundException e)
 			{
 				Log.e("File_Manager","Output stream failed");
+				return -1;
 			}
 		}
+		return -1;
 	}
-
 
 	/**
 	 * \brief		Get the file object
