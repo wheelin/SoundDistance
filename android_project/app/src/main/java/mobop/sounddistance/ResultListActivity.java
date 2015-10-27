@@ -34,8 +34,7 @@ public class ResultListActivity extends Activity {
         setContentView(R.layout.activity_result_list);
 
         measureFile = new FileReadWrite();
-        if(measureFile.openFile(FileReadWrite.FILE_NAME)<0)
-            measureFile.CreateFile(FileReadWrite.FILE_NAME);
+        measureFile.CreateFile(FileReadWrite.FILE_NAME);
 
         btMeasure = (Button) findViewById(R.id.btResultList);
         expListView = (ExpandableListView) findViewById(R.id.lvExpList);

@@ -153,20 +153,22 @@ public class FileReadWrite
 	{ 
 		file = new File(Environment.getExternalStorageDirectory() + File.separator + fileName);
 
-		try {
-			if (file.createNewFile())
-				Log.d("File_Manager", "file created: " + file);
-			else
+		if(!file.exists()) {
+			try {
+				if (file.createNewFile())
+					Log.d("File_Manager", "file created: " + file);
+				else
+					Log.e("File_Manager", "File create failed");
+			} catch (IOException e) {
 				Log.e("File_Manager", "File create failed");
-		} catch (IOException e) {
-			Log.e("File_Manager", "File create failed");
+			}
 		}
 
     	if(file.exists())
     	{
 			try 
 			{
-				fo = new FileOutputStream(file);
+				fo = new FileOutputStream(file,true);
 				fi = new FileInputStream(file);
 
 			    reader = new BufferedReader(new InputStreamReader(fi));
@@ -176,30 +178,6 @@ public class FileReadWrite
 				Log.e("File_Manager","Output stream failed");
 			}  
     	}
-	}
-
-	public int openFile(String fileName)
-	{
-		file = new File(Environment.getExternalStorageDirectory() + File.separator + fileName);
-
-		if(file.exists())
-		{
-			try
-			{
-				fo = new FileOutputStream(file);
-				fi = new FileInputStream(file);
-
-				reader = new BufferedReader(new InputStreamReader(fi));
-
-				return 1;
-			}
-			catch (FileNotFoundException e)
-			{
-				Log.e("File_Manager","Output stream failed");
-				return -1;
-			}
-		}
-		return -1;
 	}
 
 	/**
