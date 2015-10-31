@@ -20,21 +20,22 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/measuring_activity_title"
-            android:id="@+id/textView3"
+            android:id="@+id/textViewTitle"
             android:layout_gravity="center_horizontal" />
 
         <ImageView
             android:layout_width="156dp"
             android:layout_height="wrap_content"
-            android:id="@+id/imageView"
+            android:id="@+id/imageViewAxis"
             android:layout_gravity="center_horizontal"
             android:src="@drawable/three_axis" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="takeMeasure"
             android:text="@string/measuring_button_msg"
-            android:id="@+id/button2"
+            android:id="@+id/buttonTakeMeasure"
             android:layout_gravity="center_horizontal" />
     </LinearLayout>
 
