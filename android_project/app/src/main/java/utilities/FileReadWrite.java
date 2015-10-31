@@ -24,10 +24,9 @@ import android.util.Log;
  * \warning		Always call \ref CreateFile method before writing a file.
  * \warning		Don't forget to close the file at the end.
  * 
- * \author		EMG
+ * \author		Emilie Gsponer
  * \version 	1.0 
- * \date 		09.02.2015
- * \copyright	Copyright (c) 2014, 2015 Myotest SA. All rights reserved.
+ * \date 		26.10.2015
  */
 
 public class FileReadWrite 
@@ -42,6 +41,8 @@ public class FileReadWrite
 	private OutputStream fo;						///< File writer
 	private InputStream fi;							///< File reader
 	private BufferedReader reader;					///< File reader buffer
+
+	public static final String FILE_NAME = "soundDistance.txt";
 	
 	//========================================================================
 	// CLASS FUNCTIONS													 
@@ -151,24 +152,23 @@ public class FileReadWrite
 	public void CreateFile(String fileName)
 	{ 
 		file = new File(Environment.getExternalStorageDirectory() + File.separator + fileName);
-		//line = 0;
-    	try 
-    	{
-			if(file.createNewFile())
-			    Log.d("File_Manager","file created: "+file);
-            else
-                Log.e("File_Manager","File create failed");
-		} 
-    	catch (IOException e) 
-    	{
-    		Log.e("File_Manager","File create failed");
+
+		if(!file.exists()) {
+			try {
+				if (file.createNewFile())
+					Log.d("File_Manager", "file created: " + file);
+				else
+					Log.e("File_Manager", "File create failed");
+			} catch (IOException e) {
+				Log.e("File_Manager", "File create failed");
+			}
 		}
-    	
+
     	if(file.exists())
     	{
 			try 
 			{
-				fo = new FileOutputStream(file);
+				fo = new FileOutputStream(file,true);
 				fi = new FileInputStream(file);
 
 			    reader = new BufferedReader(new InputStreamReader(fi));
@@ -189,14 +189,12 @@ public class FileReadWrite
 		return file;
 	}
 
-    public static String removeFirstLineFromFile(File mFile) {
+    public static void replaceALineFromFile(File mFile, int lineIndex, String newLine) {
 
-        String firstLine;
         try {
 
             if (!mFile.isFile()) {
                 System.out.println("Parameter is not an existing file");
-                return null;
             }
 
             //Construct the new file that will later be renamed to the original filename.
@@ -206,14 +204,15 @@ public class FileReadWrite
             PrintWriter pw = new PrintWriter(new FileWriter(tempFile));
 
             String line;
-
-            //Read from the original file and write to the new
-            //unless content matches data to be removed.
-            firstLine = br.readLine();
+			int lineNb = 0;
 
             while ((line = br.readLine()) != null) {
-                pw.println(line);
-                pw.flush();
+				if(lineNb == lineIndex)
+					pw.println(newLine);
+				else
+					pw.println(line);
+				pw.flush();
+				lineNb++;
             }
 
             pw.close();
@@ -222,17 +221,14 @@ public class FileReadWrite
             //Delete the original file
             if (!mFile.delete()) {
                 System.out.println("Could not delete file");
-                return null;
             }
 
             //Rename the new file to the filename the original file had.
             if (!tempFile.renameTo(mFile))
                 System.out.println("Could not rename file");
 
-            return firstLine;
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        return null;
     }
 }

@@ -4,68 +4,81 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="mobop.sounddistance.MeasureChoiceActivity"
-    android:layout_marginTop="40dp"
-    android:layout_marginBottom="40dp"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
-    android:weightSum="1">
+    android:layout_marginLeft="@dimen/activity_left_right_margin"
+    android:layout_marginRight="@dimen/activity_left_right_margin"
+    android:gravity="center"
+    android:weightSum="9">
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/measure_choice_select_text"
-        android:id="@+id/textView"
+        android:layout_weight="2"
         android:gravity="center_vertical|center_horizontal"/>
 
     <Space
-        android:layout_width="20px"
-        android:layout_height="70px" />
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"/>
 
     <RadioGroup
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center">
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:layout_gravity="center"
+        android:weightSum="6">
 
         <RadioButton
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:text="@string/measure_choice_distance"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/radioButton"
-            android:layout_gravity="left" />
+            android:id="@+id/rbDistance"
+            android:checked="true"
+            android:layout_gravity="start" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
 
         <RadioButton
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:text="@string/measure_choice_surface"
-            android:id="@+id/radioButton2"
+            android:id="@+id/rbSurface"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:layout_gravity="left" />
+            android:layout_gravity="start" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
 
         <RadioButton
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:text="@string/measure_choice_volume"
-            android:id="@+id/radioButton3"
+            android:id="@+id/rbVolumes"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:layout_gravity="left" />
+            android:layout_gravity="start" />
 
     </RadioGroup>
 
     <Space
-        android:layout_width="20px"
-        android:layout_height="20px" />
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/measure_choice_select_button"
-        android:id="@+id/button"/>
+        android:id="@+id/btApplyChoice"/>
 
 </LinearLayout>

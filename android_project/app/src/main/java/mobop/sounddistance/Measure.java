@@ -1,6 +1,10 @@
 package mobop.sounddistance;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -8,6 +12,7 @@ import java.util.GregorianCalendar;
  * Created by greg on 26.10.15.
  */
 public class Measure {
+    private final static String TYPE_TAG = "type_tag_meas";
     private int _measureType = 1;
 
     private int _xDim = -1;
@@ -144,5 +149,21 @@ public class Measure {
                 String.valueOf(_yDim) + "," +
                 String.valueOf(_zDim) + "," +
                 _date.toString();
+    }
+
+    public static void saveTypePreferences(int type, Context context)
+    {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPref.edit();
+
+        editor.putInt(TYPE_TAG, type);
+        editor.apply();
+    }
+
+    public static int loadTypePreferences(Context context)
+    {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+
+        return sharedPref.getInt(TYPE_TAG,-1);
     }
 }
