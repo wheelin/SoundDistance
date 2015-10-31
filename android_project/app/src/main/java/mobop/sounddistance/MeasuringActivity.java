@@ -5,13 +5,17 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.os.Bundle;
 import android.app.Activity;
+import android.speech.tts.TextToSpeech;
 import android.view.View;
 import android.widget.ImageView;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Locale;
 import java.util.UUID;
+
+import utilities.TextToSpeechController;
 
 public class MeasuringActivity extends Activity {
     private static final int REQUEST_ENABLE_BT = 1;
@@ -21,6 +25,8 @@ public class MeasuringActivity extends Activity {
     private InputStream inStream = null;
     private BluetoothDevice dev = null;
     private BluetoothSocket socket = null;
+
+    TextToSpeech tts = null;
 
     ImageView img = null;
     private int measureNum = 0;
@@ -49,9 +55,23 @@ public class MeasuringActivity extends Activity {
             inStream = socket.getInputStream();
         }
         catch (IOException e) {}
+        tts = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if(status != TextToSpeech.ERROR){
+                    tts.setLanguage(Locale.ENGLISH);
+                }
+            }
+        });
     }
 
     public void takeMeasure(View view){
+        String[] strArray = {getString(R.string.first_measure_speaking),
+                                getString(R.string.second_measure_speaking),
+                                getString(R.string.third_measure_speaking),
+                                getString(R.string.finished_measure_speaking)};
+
+
         changeImage(4);
         if(measureNum > 0 && measureNum <=3) {
             for (int i = 0; i < measureNum; i++) {
@@ -64,6 +84,7 @@ public class MeasuringActivity extends Activity {
                 /*if the received value is valid
                 * and the measure type is an area or a volum
                 * we switch to the nex image*/
+                tts.speak(strArray[i], TextToSpeech.QUEUE_FLUSH,null, null);
             }
         }
         else
@@ -72,6 +93,7 @@ public class MeasuringActivity extends Activity {
             config
              */
         }
+        tts.speak(strArray[3], TextToSpeech.QUEUE_FLUSH, null,null);
     }
 
     private void changeImage(int image_num){
