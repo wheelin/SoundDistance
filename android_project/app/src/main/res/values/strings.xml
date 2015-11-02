@@ -35,5 +35,6 @@
         Congratulation, you have completed the measure process.
     </string>
 
+    <string name="bt_rename_measure">Apply</string>
 
 </resources>

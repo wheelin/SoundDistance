@@ -7,21 +7,13 @@
     tools:context="mobop.sounddistance.RenameActionPopup"
     android:layout_marginLeft="@dimen/activity_left_right_margin"
     android:layout_marginRight="@dimen/activity_left_right_margin"
-    android:gravity="center"
-    android:weightSum="9">
+    android:weightSum="2">
 
     <EditText
+        android:layout_weight="1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/editText"
-        android:ems="10"
-        android:layout_weight="1" />
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/button"
-        android:layout_weight="1" />
+        android:layout_height="0dp"
+        android:id="@+id/etRename"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:ems="10" />
 </LinearLayout>

@@ -166,4 +166,9 @@ public class Measure {
 
         return sharedPref.getInt(TYPE_TAG,-1);
     }
+
+    public String measureToString()
+    {
+        return _measName+","+_measureType+","+_xDim+","+_yDim+","+_zDim+","+_mainResult+"\n";
+    }
 }

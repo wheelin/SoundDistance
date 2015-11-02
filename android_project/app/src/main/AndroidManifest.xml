@@ -31,10 +31,6 @@
             android:name=".MeasuringActivity"
             android:label="Measure Control" >
         </activity>
-        <activity
-            android:name=".RenameActionPopup"
-            android:label="@string/title_activity_measure_action_popup" >
-        </activity>
     </application>
 
 </manifest>

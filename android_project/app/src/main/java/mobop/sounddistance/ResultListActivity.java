@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
@@ -27,6 +28,8 @@ public class ResultListActivity extends Activity {
     List<String> listDataHeader;
     HashMap<String, List<String>> listDataChild;
 
+    Activity mActivity;
+
     FileReadWrite measureFile;
 
     Button btMeasure;
@@ -34,18 +37,37 @@ public class ResultListActivity extends Activity {
 
     final CharSequence[] items = { "Rename", "Delete"};
     AlertDialog.Builder builder;
+    AlertDialog.Builder helpBuilder;
+    AlertDialog mAlertDialog;
+    View inflateLayout;
+    EditText etRenameMeas;
+
+    int indexToRename;
+
+    FileReadWrite myFile;
+    List<String> measList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result_list);
 
+        mActivity = this;
+
+        measList = new ArrayList<>();
         measureFile = new FileReadWrite();
         measureFile.CreateFile(FileReadWrite.FILE_NAME);
 
         btMeasure = (Button) findViewById(R.id.btResultList);
         expListView = (ExpandableListView) findViewById(R.id.lvExpList);
         tvEmptyMeas = (TextView) findViewById(R.id.tvNoMeasure);
+        inflateLayout = getLayoutInflater().inflate(R.layout.rename_action_popup, null);
+        etRenameMeas = (EditText) inflateLayout.findViewById(R.id.etRename);
+
+        indexToRename = -1;
+
+        myFile = new FileReadWrite();
+        myFile.CreateFile(FileReadWrite.FILE_NAME);
 
         btMeasure.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,7 +81,7 @@ public class ResultListActivity extends Activity {
             public void onClick(DialogInterface dialog, int item) {
                 if(item == 0)
                 {
-                    Log.e("hello", "Rename");
+                    mAlertDialog.show();
                 }
                 else
                 {
@@ -67,6 +89,38 @@ public class ResultListActivity extends Activity {
                 }
             }
         });
+
+        helpBuilder = new AlertDialog.Builder(this);
+        helpBuilder.setView(inflateLayout);
+        helpBuilder.setTitle("Rename measure");
+        helpBuilder.setPositiveButton("Apply",
+                new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(indexToRename != -1)
+                        {
+                            Log.e("hello", etRenameMeas.getText().toString());
+                            String[] meas = measList.get(indexToRename).split(",");
+                            meas[0] = etRenameMeas.getText().toString();
+                            myFile.replaceALineFromFile(indexToRename,meas[0]+","+meas[1]+","+meas[2]+","+
+                                    meas[3]+","+meas[4]+","+meas[5]+"\n");
+                            indexToRename = -1;
+                        }
+                        prepareListData();
+                        listAdapter = new ExpandableListAdapter(mActivity, listDataHeader, listDataChild);
+                        expListView.setAdapter(listAdapter);
+                        etRenameMeas.setText("");
+                    }
+                });
+        helpBuilder.setNegativeButton("Cancel",
+                new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.e("hello", "Cancel");
+                        etRenameMeas.setText("");
+                    }
+                });
+        mAlertDialog = helpBuilder.create();
     }
 
     @Override
@@ -93,6 +147,7 @@ public class ResultListActivity extends Activity {
                 public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                     if(ExpandableListView.getPackedPositionType(id)==ExpandableListView.PACKED_POSITION_TYPE_GROUP)
                     {
+                        indexToRename = position;
                         builder.show();
                     }
                     return false;
@@ -105,10 +160,33 @@ public class ResultListActivity extends Activity {
      * Preparing the list data
      */
     private void prepareListData() {
-        listDataHeader = new ArrayList<String>();
-        listDataChild = new HashMap<String, List<String>>();
-
-        // Adding child data
+        listDataHeader = new ArrayList<>();
+        listDataChild = new HashMap<>();
+        List<String> child;
+        String meas;
+        do {
+            child = new ArrayList<>();
+            meas = myFile.ReadDatas();
+            if(meas != null)
+            {
+                measList.add(meas);
+                String[] array = meas.split(",");
+                if(array.length == 6)
+                {
+                    listDataHeader.add(array[0]);
+                    child.add("Measure type : "+array[1]);
+                    if(Integer.valueOf(array[2])>0)
+                        child.add("x: "+array[2]);
+                    if(Integer.valueOf(array[3])>0)
+                        child.add("y: "+array[3]);
+                    if(Integer.valueOf(array[4])>0)
+                        child.add("z: "+array[4]);
+                    child.add("Result: "+array[5]);
+                    listDataChild.put(array[0],child);
+                }
+            }
+        }while(meas!=null);
+        /*// Adding child data
         listDataHeader.add("Top 250");
         listDataHeader.add("Now Showing");
         listDataHeader.add("Coming Soon..");
@@ -140,7 +218,7 @@ public class ResultListActivity extends Activity {
 
         listDataChild.put(listDataHeader.get(0), top250); // Header, Child data
         listDataChild.put(listDataHeader.get(1), nowShowing);
-        listDataChild.put(listDataHeader.get(2), comingSoon);
+        listDataChild.put(listDataHeader.get(2), comingSoon);*/
     }
 
     @Override
