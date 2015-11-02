@@ -20,5 +20,6 @@
     <string name="result_list_title">Your measures</string>
     <string name="result_list_button">New measure</string>
     <string name="result_list_no_measure">No measures yet</string>
+    <string name="title_activity_measure_action_popup">MeasureActionPopup</string>
 
 </resources>
