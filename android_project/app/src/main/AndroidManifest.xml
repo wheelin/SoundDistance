@@ -3,7 +3,7 @@
     package="mobop.sounddistance" >
     <uses-permission android:name="android.permission.BLUETOOTH" />
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -30,6 +30,10 @@
         <activity
             android:name=".MeasuringActivity"
             android:label="Measure Control" >
+        </activity>
+        <activity
+            android:name=".RenameActionPopup"
+            android:label="@string/title_activity_measure_action_popup" >
         </activity>
     </application>
 

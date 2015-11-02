@@ -1,11 +1,15 @@
 package mobop.sounddistance;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
@@ -28,6 +32,9 @@ public class ResultListActivity extends Activity {
     Button btMeasure;
     TextView tvEmptyMeas;
 
+    final CharSequence[] items = { "Rename", "Delete"};
+    AlertDialog.Builder builder;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,12 +53,27 @@ public class ResultListActivity extends Activity {
                 startActivity(new Intent(getApplicationContext(), MeasureChoiceActivity.class));
             }
         });
+
+        builder = new AlertDialog.Builder(this);
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int item) {
+                if(item == 0)
+                {
+                    Log.e("hello", "Rename");
+                }
+                else
+                {
+                    Log.e("hello", "Delete");
+                }
+            }
+        });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
+        Log.e("hello", "list");
         if(measureFile.getFile().length() == 0)
         {
             tvEmptyMeas.setVisibility(View.VISIBLE);
@@ -66,6 +88,16 @@ public class ResultListActivity extends Activity {
             listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
             // setting list adapter
             expListView.setAdapter(listAdapter);
+            expListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                    if(ExpandableListView.getPackedPositionType(id)==ExpandableListView.PACKED_POSITION_TYPE_GROUP)
+                    {
+                        builder.show();
+                    }
+                    return false;
+                }
+            });
         }
     }
 
