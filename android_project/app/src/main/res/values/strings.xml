@@ -22,16 +22,13 @@
     <string name="result_list_no_measure">No measures yet</string>
 
     <string name="first_measure_speaking">
-        Please, put the red box against a wall with the two speakers looking forward
-        to the next wall you want to measure and press the button on your smartphone screen.
+        Please, put the back of the red box against a wall and click on the button.
     </string>
     <string name="second_measure_speaking">
-        Please, put the red box against a wall that is perpendicular to the first in order to
-        obtain an area and press again the button on your smartphone screen.
+        Please, put the back of the red box against a perpendicular wall and click on the button.
     </string>
     <string name="third_measure_speaking">
-        Now, please put the box in a vertical manner in order to measure the distance between the
-        floor and the ceiling.
+        Please, put the box in the vertical stand and press the button.
     </string>
     <string name="finished_measure_speaking">
         Congratulation, you have completed the measure process.

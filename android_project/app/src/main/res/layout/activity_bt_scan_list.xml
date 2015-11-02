@@ -13,6 +13,5 @@
         android:text="Launch measuring activity"
         android:id="@+id/btLaunchMesActivity"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:onClick="launchMeasureActivity"/>
+        android:layout_centerHorizontal="true"/>
 </RelativeLayout>
