@@ -44,7 +44,6 @@ public class ResultListActivity extends Activity {
 
     int indexToRename;
 
-    FileReadWrite myFile;
     List<String> measList;
 
     @Override
@@ -58,6 +57,15 @@ public class ResultListActivity extends Activity {
         measureFile = new FileReadWrite();
         measureFile.CreateFile(FileReadWrite.FILE_NAME);
 
+        /*Measure measure = new Measure("test1",1,39);
+        measureFile.WriteDatas(measure.measureToString());
+
+        measure = new Measure("test2",2,10,20);
+        measureFile.WriteDatas(measure.measureToString());
+
+        measure = new Measure("test3",1,30);
+        measureFile.WriteDatas(measure.measureToString());*/
+
         btMeasure = (Button) findViewById(R.id.btResultList);
         expListView = (ExpandableListView) findViewById(R.id.lvExpList);
         tvEmptyMeas = (TextView) findViewById(R.id.tvNoMeasure);
@@ -65,9 +73,6 @@ public class ResultListActivity extends Activity {
         etRenameMeas = (EditText) inflateLayout.findViewById(R.id.etRename);
 
         indexToRename = -1;
-
-        myFile = new FileReadWrite();
-        myFile.CreateFile(FileReadWrite.FILE_NAME);
 
         btMeasure.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,6 +91,11 @@ public class ResultListActivity extends Activity {
                 else
                 {
                     Log.e("hello", "Delete");
+                    measureFile.deleteALineFromFile(indexToRename);
+                    prepareListData();
+                    listAdapter = new ExpandableListAdapter(mActivity, listDataHeader, listDataChild);
+                    expListView.setAdapter(listAdapter);
+                    listAdapter.notifyDataSetChanged();
                 }
             }
         });
@@ -102,13 +112,14 @@ public class ResultListActivity extends Activity {
                             Log.e("hello", etRenameMeas.getText().toString());
                             String[] meas = measList.get(indexToRename).split(",");
                             meas[0] = etRenameMeas.getText().toString();
-                            myFile.replaceALineFromFile(indexToRename,meas[0]+","+meas[1]+","+meas[2]+","+
+                            measureFile.replaceALineFromFile(indexToRename,meas[0]+","+meas[1]+","+meas[2]+","+
                                     meas[3]+","+meas[4]+","+meas[5]+"\n");
                             indexToRename = -1;
                         }
                         prepareListData();
                         listAdapter = new ExpandableListAdapter(mActivity, listDataHeader, listDataChild);
                         expListView.setAdapter(listAdapter);
+                        listAdapter.notifyDataSetChanged();
                         etRenameMeas.setText("");
                     }
                 });
@@ -164,9 +175,11 @@ public class ResultListActivity extends Activity {
         listDataChild = new HashMap<>();
         List<String> child;
         String meas;
+        measureFile = new FileReadWrite();
+        measureFile.CreateFile(FileReadWrite.FILE_NAME);
         do {
             child = new ArrayList<>();
-            meas = myFile.ReadDatas();
+            meas = measureFile.ReadDatas();
             if(meas != null)
             {
                 measList.add(meas);
@@ -186,6 +199,12 @@ public class ResultListActivity extends Activity {
                 }
             }
         }while(meas!=null);
+
+        if(measList.size() == 0)
+        {
+            tvEmptyMeas.setVisibility(View.VISIBLE);
+            expListView.setVisibility(View.GONE);
+        }
         /*// Adding child data
         listDataHeader.add("Top 250");
         listDataHeader.add("Now Showing");

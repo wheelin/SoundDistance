@@ -189,6 +189,48 @@ public class FileReadWrite
 		return file;
 	}
 
+	public void deleteALineFromFile(int lineIndex) {
+
+		try {
+
+			if (!file.isFile()) {
+				System.out.println("Parameter is not an existing file");
+			}
+
+			//Construct the new file that will later be renamed to the original filename.
+			File tempFile = new File(file.getAbsolutePath() + ".tmp");
+
+			BufferedReader br = new BufferedReader(new FileReader(file));
+			PrintWriter pw = new PrintWriter(new FileWriter(tempFile));
+
+			String line;
+			int lineNb = 0;
+
+			while ((line = br.readLine()) != null) {
+				if(lineNb != lineIndex) {
+					pw.println(line);
+					pw.flush();
+				}
+				lineNb++;
+			}
+
+			pw.close();
+			br.close();
+
+			//Delete the original file
+			if (!file.delete()) {
+				System.out.println("Could not delete file");
+			}
+
+			//Rename the new file to the filename the original file had.
+			if (!tempFile.renameTo(file))
+				System.out.println("Could not rename file");
+
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+	}
+
     public void replaceALineFromFile(int lineIndex, String newLine) {
 
         try {
