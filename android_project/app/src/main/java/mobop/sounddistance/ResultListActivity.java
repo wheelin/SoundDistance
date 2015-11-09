@@ -97,9 +97,17 @@ public class ResultListActivity extends Activity {
                     Log.e("hello", "Delete");
                     measureFile.deleteALineFromFile(indexToRename);
                     prepareListData();
-                    listAdapter = new ExpandableListAdapter(mActivity, listDataHeader, listDataChild);
-                    expListView.setAdapter(listAdapter);
-                    listAdapter.notifyDataSetChanged();
+                    if(!listDataHeader.isEmpty()) {
+                        listAdapter = new ExpandableListAdapter(mActivity, listDataHeader, listDataChild);
+                        expListView.setAdapter(listAdapter);
+                        listAdapter.notifyDataSetChanged();
+                        tvEmptyMeas.setVisibility(View.GONE);
+                        expListView.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        tvEmptyMeas.setVisibility(View.VISIBLE);
+                        expListView.setVisibility(View.GONE);
+                    }
                 }
             }
         });
