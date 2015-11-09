@@ -35,7 +35,7 @@ public class ResultListActivity extends Activity {
     Button btMeasure;
     TextView tvEmptyMeas;
 
-    final CharSequence[] items = { "Rename", "Delete"};
+    final CharSequence[] items = { "Rename", "View", "Delete"};
     AlertDialog.Builder builder;
     AlertDialog.Builder helpBuilder;
     AlertDialog mAlertDialog;
@@ -88,6 +88,10 @@ public class ResultListActivity extends Activity {
                 {
                     mAlertDialog.show();
                 }
+                else if (item == 1)
+                {
+
+                }
                 else
                 {
                     Log.e("hello", "Delete");
@@ -113,7 +117,7 @@ public class ResultListActivity extends Activity {
                             String[] meas = measList.get(indexToRename).split(",");
                             meas[0] = etRenameMeas.getText().toString();
                             measureFile.replaceALineFromFile(indexToRename,meas[0]+","+meas[1]+","+meas[2]+","+
-                                    meas[3]+","+meas[4]+","+meas[5]+"\n");
+                                    meas[3]+","+meas[4]+","+meas[5]);
                             indexToRename = -1;
                         }
                         prepareListData();
