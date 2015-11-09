@@ -36,5 +36,6 @@
     </string>
 
     <string name="bt_rename_measure">Apply</string>
+    <string name="title_activity_bluetooth">BluetoothActivity</string>
 
 </resources>

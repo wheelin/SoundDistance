@@ -37,7 +37,7 @@ public class MeasureChoiceActivity extends Activity {
                     type = 3;
                 Measure.saveTypePreferences(type, getApplicationContext());
 
-                startActivity(new Intent(getApplicationContext(), BtScanListActivity.class));
+                startActivity(new Intent(getApplicationContext(), BluetoothActivity.class));
             }
         });
     }
