@@ -1,40 +1,56 @@
-#include <SoftwareSerial.h>
-#include <NewPing.h>
+#include <stdint.h>
 
-#define TRIGGER_PIN 12
-#define ECHO_PIN 13
-#define MAX_DIST 200
+uint8_t interpreteCommand(String str);
+uint8_t configureBluetooth(void);
 
-char incData[50];
-int interpreteIncommingCmd(char * str);
+String cmd;
 
-NewPing sonar(TRIGGER_PIN, ECHO_PIN, MAX_DIST);
-SoftwareSerial blt(10, 11);
-
-char datas[20];
-
-void setup()
-{
-    blt.begin(9600);
-    Serial.begin(9600);
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(115200);
+  Serial5.begin(9600);
+  while(!Serial);
+  while(!Serial5);
 }
 
-void loop()
-{
-
-    blt.println("Salut");
-    if(blt.available())
-    {
-        char * str = blt.read();
-        blt.print(str);
-        Serial.prinln(str);
-    }
-    delay(100);
+void loop() {
+  uint8_t cmdType = 0;
+  int val = random(0, 4000);
+  if(Serial5.available() > 0)
+  {
+    cmd = Serial5.readString();
+    cmdType = interpreteCommand(cmd);
+  }
+  else 
+  {
+    Serial.println("none");
+  }
+  switch(cmdType)
+  {
+	case 1:
+	  Serial.println("INV_CMD");
+	  Serial5.println("#INV_CMD");
+	  break;
+	case 2:
+	  Serial.println("MEAS");
+	  Serial5.println("#MEAS");
+	  Serial5.println(val);
+	  break;
+	default:
+	  break;
+  }
+  delay(500);
 }
 
-int interpreteIncommingCmd(char * str)
+uint8_t interpreteCommand(String str)
 {
-	String sstr = String(str);
-	sstr.toLowerCase();
-	sstr.trim();
+  str.trim();
+  str.toUpperCase();
+  if(str.compareTo("MEAS") == 0) return 2;
+  else return 1;
+}
+
+uint8_t configureBluetooth(void)
+{
+  
 }
