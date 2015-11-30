@@ -255,7 +255,7 @@ public class BtComm
             // given BluetoothDevice
             try 
             {
-                tmp = device.createRfcommSocketToServiceRecord(MY_UUID_SECURE);
+                tmp = device.createInsecureRfcommSocketToServiceRecord(MY_UUID_SECURE);
             } 
             catch (IOException e) 
             {

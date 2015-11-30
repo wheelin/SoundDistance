@@ -179,6 +179,7 @@ public class BluetoothActivity extends Activity
                     if(BluetoothObjects.mBtComm != null)
                     {
                         /* Connect bluetooth device */
+                        mDeviceName = btDevices.elementAt(position).getName();
                         BluetoothObjects.mBtComm.connect(btDevices.elementAt(position));
                     }
 

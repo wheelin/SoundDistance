@@ -7,11 +7,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
 import android.os.Handler;
+import android.os.Message;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,6 +33,27 @@ public class MeasuringActivity extends Activity {
     Button bt;
 
     boolean nextIteration = false;
+
+    private final Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+        		/* Show toast message */
+                case BtComm.MESSAGE_TOAST:
+                    Toast.makeText(getApplicationContext(), msg.getData().getString(BtComm.TOAST), Toast.LENGTH_SHORT).show();
+                    if (msg.getData().getString(BtComm.TOAST).contains(BtComm.MSG_LOST)) {
+                        BluetoothObjects.mBtComm.stop();
+                    }
+                    break;
+                /* Read received message from bluetooth communication */
+                case BtComm.MESSAGE_READ:
+                    byte[] readBuf = (byte[]) msg.obj;
+                    String readMessage = new String(readBuf, 0, msg.arg1);
+                    Log.e("Arduino msg", readMessage);
+                    break;
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +77,24 @@ public class MeasuringActivity extends Activity {
         bt = (Button) findViewById(R.id.buttonTakeMeasure);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(BluetoothObjects.mBtComm!=null)
+        {
+            if(BluetoothObjects.mBtComm.getState() == BtComm.STATE_CONNECTED)
+            {
+                BluetoothObjects.mBtComm.changeHandler(mHandler);
+            }
+            else
+            {
+                Toast.makeText(getApplicationContext(),"Bluetooth error, reconnect", Toast.LENGTH_SHORT).show();
+            }
+        }
+        else
+            Toast.makeText(getApplicationContext(),"Bluetooth error, reconnect", Toast.LENGTH_SHORT).show();
+    }
+
     public void takeMeasure(View view){
         String[] strArray = {getString(R.string.first_measure_speaking),
                 getString(R.string.second_measure_speaking),
@@ -69,6 +110,7 @@ public class MeasuringActivity extends Activity {
                 tts.speak(strArray[0], TextToSpeech.QUEUE_FLUSH, null, null);
                 //while (nextIteration != true);
                 nextIteration = false;
+                BluetoothObjects.mBtComm.write(("MEAS"+'\r').getBytes());
                 if(measureNum == 1){
                     tts.speak(strArray[3], TextToSpeech.QUEUE_ADD, null, null);
                     bt.setText("Finish");
