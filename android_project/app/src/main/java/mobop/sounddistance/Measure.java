@@ -24,6 +24,20 @@ public class Measure {
     private String _measName = "";
     private Calendar _date;
 
+    public Measure(int measType){
+        Calendar c = Calendar.getInstance();
+        set_measureType(measType);
+        _date = new GregorianCalendar(c.get(Calendar.YEAR),
+                c.get(Calendar.MONTH) + 1,
+                c.get(Calendar.DAY_OF_MONTH),
+                c.get(Calendar.HOUR),
+                c.get(Calendar.MINUTE));
+        set_xDim(-1);
+        set_yDim(-1);
+        set_zDim(-1);
+        set_mainResult(-1);
+    }
+
     public Measure(String measName, int measType, int...dim){
         Calendar c = Calendar.getInstance();
         set_measName(measName);
