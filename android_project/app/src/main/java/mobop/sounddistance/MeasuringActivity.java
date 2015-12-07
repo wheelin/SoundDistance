@@ -179,6 +179,7 @@ public class MeasuringActivity extends Activity {
     public void setNextIterationTrue(){
         this.nextIteration = true;
     }
+
     private int interpreteResponse(String resp){
         Pattern p;
         Matcher m;
@@ -191,5 +192,11 @@ public class MeasuringActivity extends Activity {
         else {
             return -1;
         }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        BluetoothObjects.mBtComm.stop();
+
     }
 }
