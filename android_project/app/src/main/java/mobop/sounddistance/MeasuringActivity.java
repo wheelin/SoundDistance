@@ -169,4 +169,10 @@ public class MeasuringActivity extends Activity {
     public void setNextIterationTrue(){
         this.nextIteration = true;
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        BluetoothObjects.mBtComm.stop();
+    }
 }
