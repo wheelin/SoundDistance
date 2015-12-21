@@ -1,5 +1,8 @@
 #include <stdint.h>
 
+#define echoPin 7
+#define trigPin 8
+
 uint8_t interpreteCommand(String str);
 uint8_t configureBluetooth(void);
 
@@ -11,6 +14,8 @@ void setup() {
   Serial5.begin(9600);
   while(!Serial);
   while(!Serial5);
+
+
 }
 
 void loop() {
@@ -50,7 +55,7 @@ uint8_t interpreteCommand(String str)
   else return 1;
 }
 
-uint8_t configureBluetooth(void)
+int getDistance()
 {
-  
+
 }
