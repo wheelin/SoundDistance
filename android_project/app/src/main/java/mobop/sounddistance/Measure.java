@@ -142,27 +142,37 @@ public class Measure {
         this._mainResult = _mainResult;
     }
 
-    public String toString(){
-        String mt = "";
-        switch (_measureType){
+    public void processMainResult()
+    {
+        switch (_measureType)
+        {
             case 1:
-                mt = "Distance";
+                _mainResult = _xDim;
                 break;
             case 2:
-                mt = "Area";
+                _mainResult = _xDim * _yDim;
                 break;
             case 3:
-                mt = "Volume";
+                _mainResult = _xDim * _yDim * _zDim;
                 break;
             default:
+                _mainResult = -1;
                 break;
         }
-        return _measName +
-                mt + "," +
-                String.valueOf(this._xDim) + "," +
-                String.valueOf(_yDim) + "," +
-                String.valueOf(_zDim) + "," +
-                _date.toString();
+    }
+
+    private String measTypeToString()
+    {
+        switch (_measureType){
+            case 1:
+                return "Distance";
+            case 2:
+                return "Area";
+            case 3:
+                return "Volume";
+            default:
+                return "Error";
+        }
     }
 
     public static void saveTypePreferences(int type, Context context)
@@ -183,6 +193,6 @@ public class Measure {
 
     public String measureToString()
     {
-        return _measName+","+_measureType+","+_xDim+","+_yDim+","+_zDim+","+_mainResult+"\n";
+        return _measName+","+measTypeToString()+","+_xDim+","+_yDim+","+_zDim+","+_mainResult+"\n";
     }
 }

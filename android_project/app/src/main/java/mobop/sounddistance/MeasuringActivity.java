@@ -11,12 +11,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import java.util.Calendar;
 import java.util.regex.*;
 import java.util.Locale;
+
+import utilities.FileReadWrite;
 
 
 public class MeasuringActivity extends Activity {
     TextToSpeech tts = null;
+    FileReadWrite fio;
 
     Measure meas;
     int numberOfReadings = 0;
@@ -51,12 +56,17 @@ public class MeasuringActivity extends Activity {
                     switch (numberOfReadings){
                         case 0:
                             meas.set_xDim(m);
+                            Log.e("Arduino recorded", Integer.toString(m));
+                            Log.e("Arduino msg", "Setting x value");
                             break;
                         case 1:
                             meas.set_yDim(m);
+                            Log.e("Arduino msg", "Setting y value");
                             break;
                         case 2:
                             meas.set_zDim(m);
+                            Log.e("Arduino msg", "Setting z value");
+                            break;
                     }
                     numberOfReadings++;
                     currentMeasureNum++;
@@ -86,6 +96,7 @@ public class MeasuringActivity extends Activity {
         h = new Handler();
         bt = (Button) findViewById(R.id.buttonTakeMeasure);
         meas = new Measure(measureNum);
+        fio = new FileReadWrite();
     }
 
     @Override
@@ -116,17 +127,19 @@ public class MeasuringActivity extends Activity {
             case 1:
                 tts.speak(strArray[0], TextToSpeech.QUEUE_FLUSH, null, null);
                 nextIteration = false;
-                BluetoothObjects.mBtComm.write(("MEAS"+'\r').getBytes());
+                BluetoothObjects.mBtComm.write(("meas"+'\n').getBytes());
                 if(measureNum == 1){
                     tts.speak(strArray[3], TextToSpeech.QUEUE_ADD, null, null);
                     bt.setText("Finish");
                     currentMeasureNum += 3;
                     bt.setActivated(false);
                 }
+                else changeImage(1);
                 break;
             case 2:
                 if(measureNum > 1) {
                     tts.speak(strArray[1], TextToSpeech.QUEUE_FLUSH, null, null);
+                    BluetoothObjects.mBtComm.write(("meas" + '\n').getBytes());
                     changeImage(1);
                     nextIteration = false;
                 }
@@ -135,11 +148,12 @@ public class MeasuringActivity extends Activity {
                     bt.setText("Finish");
                     currentMeasureNum += 3;
                     bt.setActivated(false);
-                }
+                } else changeImage(3);
                 break;
             case 3:
                 if(measureNum == 3) {
                     tts.speak(strArray[2], TextToSpeech.QUEUE_FLUSH, null, null);
+                    BluetoothObjects.mBtComm.write(("meas" + '\n').getBytes());
                     changeImage(2);
                     tts.speak(strArray[3], TextToSpeech.QUEUE_ADD, null, null);
                     bt.setText("Finish");
@@ -151,6 +165,17 @@ public class MeasuringActivity extends Activity {
                 ** Now, we must integrate the measure object in an intent in order to give it
                 * to the next activity
                  */
+                String name_part = Integer.toString(Calendar.getInstance().get(Calendar.HOUR))+ ":" +
+                        Integer.toString(Calendar.getInstance().get(Calendar.MINUTE)) + "_" +
+                        Integer.toString(Calendar.getInstance().get(Calendar.DAY_OF_MONTH)) + "/" +
+                        Integer.toString(Calendar.getInstance().get(Calendar.MONTH)) + "/" +
+                        Integer.toString(Calendar.getInstance().get(Calendar.YEAR));
+                meas.set_measName("measure"+ "_" +name_part);
+                Log.e("Arduino measure name", "Measure saved as " + meas.get_measName());
+                meas.processMainResult();
+                fio.CreateFile(FileReadWrite.FILE_NAME);
+                fio.WriteDatas(meas.measureToString());
+                fio.CloseFile();
                 startActivity(new Intent(getApplicationContext(), ResultListActivity.class));
                 break;
         }
@@ -180,23 +205,22 @@ public class MeasuringActivity extends Activity {
         this.nextIteration = true;
     }
 
-    private int interpreteResponse(String resp){
-        Pattern p;
-        Matcher m;
-        p = Pattern.compile("[0-9]{1,4}");
-        m = p.matcher(resp);
-        boolean found = m.matches();
-        if(found){
+    private int interpreteResponse(String resp) {
+        Log.e("Arduino parsing string", resp);
+        Pattern p = Pattern.compile("\\d{3,4}");
+        Matcher m = p.matcher(resp);
+        boolean found = m.find();
+        if (found) {
+            Log.e("Arduino parsing", "Pattern matching successful");
             return Integer.parseInt(m.group());
-        }
-        else {
+        } else {
+            Log.e("Arduino parsing", "Pattern matching failed");
             return -1;
         }
-
+    }
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         BluetoothObjects.mBtComm.stop();
-
     }
 }

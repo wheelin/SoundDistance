@@ -11,6 +11,7 @@ double getDistance();
 SoftwareSerial mySerial(rxPin, txPin); // RX, TX
 
 String cmd;
+char  dst_str[10];
 char c;
 
 void setup()
@@ -39,9 +40,10 @@ void loop()
   if(cmd.equals("meas"))
   {
     double dist = getDistance();
+    sprintf(dst_str, " %04d\n", (int)(dist*10));
     Serial.print("Distance is :");
-    Serial.println((int)(dist*10));
-    mySerial.println((int)(dist*10));
+    Serial.println(dst_str);
+    mySerial.print(dst_str);
     cmd = "";
   }
   else
