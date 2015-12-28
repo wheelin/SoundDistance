@@ -15,9 +15,14 @@
         android:layout_height="0dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/measure_result_title"
-        android:gravity="center_horizontal"
+        android:gravity="center_horizontal|center_vertical"
         android:id="@+id/tvMeasureTitle"
         android:layout_weight="1"/>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"/>
 
     <TextView
         android:layout_width="match_parent"
