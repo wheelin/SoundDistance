@@ -23,7 +23,7 @@ import android.util.Log;
  * </ul>
  * </p>
  * 	\author	Emilie Gsponer
- * 	\version 1.0 - 17.01.2014  
+ * 	02.10.2105
  */
 public class BtComm
 {

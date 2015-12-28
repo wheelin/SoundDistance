@@ -3,8 +3,6 @@ package mobop.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -13,6 +11,12 @@ import android.widget.TextView;
 import mobop.sounddistance.R;
 import utilities.FileReadWrite;
 
+/** \brief
+ *  Show the measure of the the index passed by intent
+ *  Display is different for volume, distance and area
+ * 	\author	Emilie Gsponer
+ * 	28.12.2015
+ */
 public class MeasureResultActivity extends Activity {
 
     public final static String IndexMeasTag = "indexMeas";
@@ -36,6 +40,7 @@ public class MeasureResultActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_measure_result);
 
+        //Get file index to display
         Intent intent = getIntent();
         index = intent.getIntExtra(IndexMeasTag,0);
 
@@ -65,7 +70,9 @@ public class MeasureResultActivity extends Activity {
     protected void onResume() {
         super.onResume();
         int i=-1;
-        String result = " ";
+
+        //Read the file at given index
+        String result;
         do
         {
             result = measureFile.ReadDatas();
@@ -76,36 +83,42 @@ public class MeasureResultActivity extends Activity {
             String[] array = result.split(",");
             if(array.length == 6) {
                 tvTitle.setText(array[0]);
-                if (array[1].equals("Distance")) {
-                    tvMeasureType.setText(array[1] + ": " + array[5] + " mm");
-                    ivDistance.setVisibility(View.VISIBLE);
-                    ivVolume.setVisibility(View.GONE);
-                    ivSquare.setVisibility(View.GONE);
-                    tvXMeas.setVisibility(View.VISIBLE);
-                    tvXMeas.setText("x: " + array[2] + " mm");
-                    tvYMeas.setVisibility(View.GONE);
-                    tvZMeas.setVisibility(View.GONE);
-                } else if (array[1].equals("Area")) {
-                    tvMeasureType.setText(array[1] + ": " + array[5] + " mm2");
-                    ivDistance.setVisibility(View.GONE);
-                    ivVolume.setVisibility(View.GONE);
-                    ivSquare.setVisibility(View.VISIBLE);
-                    tvXMeas.setVisibility(View.VISIBLE);
-                    tvXMeas.setText("x: " + array[2] + " mm");
-                    tvYMeas.setVisibility(View.VISIBLE);
-                    tvYMeas.setText("y: "+array[3] + " mm");
-                    tvZMeas.setVisibility(View.GONE);
-                } else if (array[1].equals("Volume")) {
-                    tvMeasureType.setText(array[1] + ": " + array[5] + " mm3");
-                    ivDistance.setVisibility(View.GONE);
-                    ivVolume.setVisibility(View.VISIBLE);
-                    ivSquare.setVisibility(View.GONE);
-                    tvXMeas.setVisibility(View.VISIBLE);
-                    tvXMeas.setText("x: "+array[2] + " mm");
-                    tvYMeas.setVisibility(View.VISIBLE);
-                    tvYMeas.setText("y: "+array[3] + " mm");
-                    tvZMeas.setVisibility(View.VISIBLE);
-                    tvZMeas.setText("z: "+array[4] + " mm");
+
+                //Configure display according to measure type
+                switch (array[1]) {
+                    case "Distance":
+                        tvMeasureType.setText(array[1] + ": " + array[5] + " mm");
+                        ivDistance.setVisibility(View.VISIBLE);
+                        ivVolume.setVisibility(View.GONE);
+                        ivSquare.setVisibility(View.GONE);
+                        tvXMeas.setVisibility(View.VISIBLE);
+                        tvXMeas.setText("x: " + array[2] + " mm");
+                        tvYMeas.setVisibility(View.GONE);
+                        tvZMeas.setVisibility(View.GONE);
+                        break;
+                    case "Area":
+                        tvMeasureType.setText(array[1] + ": " + array[5] + " mm2");
+                        ivDistance.setVisibility(View.GONE);
+                        ivVolume.setVisibility(View.GONE);
+                        ivSquare.setVisibility(View.VISIBLE);
+                        tvXMeas.setVisibility(View.VISIBLE);
+                        tvXMeas.setText("x: " + array[2] + " mm");
+                        tvYMeas.setVisibility(View.VISIBLE);
+                        tvYMeas.setText("y: " + array[3] + " mm");
+                        tvZMeas.setVisibility(View.GONE);
+                        break;
+                    case "Volume":
+                        tvMeasureType.setText(array[1] + ": " + array[5] + " mm3");
+                        ivDistance.setVisibility(View.GONE);
+                        ivVolume.setVisibility(View.VISIBLE);
+                        ivSquare.setVisibility(View.GONE);
+                        tvXMeas.setVisibility(View.VISIBLE);
+                        tvXMeas.setText("x: " + array[2] + " mm");
+                        tvYMeas.setVisibility(View.VISIBLE);
+                        tvYMeas.setText("y: " + array[3] + " mm");
+                        tvZMeas.setVisibility(View.VISIBLE);
+                        tvZMeas.setText("z: " + array[4] + " mm");
+                        break;
                 }
             }
         }

@@ -1,5 +1,6 @@
 package mobop.activities;
 
+import java.lang.ref.WeakReference;
 import java.util.Set;
 import java.util.Vector;
 
@@ -29,11 +30,10 @@ import utilities.BtComm;
  * Support:
  * <ul>
  * <li>Bluetooth standard</li>
- * <li>Bluetooth low energy (BLE)</li>
  * </ul>
  * </p>
  * 	\author	Emilie Gsponer
- * 	\version 1.0 - 14.01.2014
+ * 	\version 1.0 - 14.10.2015
  */
 
 public class BluetoothActivity extends Activity
@@ -50,9 +50,9 @@ public class BluetoothActivity extends Activity
 
 	/* PRIVATE MEMBERS														*/
 
-    private String mDeviceName = null; 					///< Name of the connected BLE device
+    private static String mDeviceName = null; 					///< Name of the connected BLE device
 
-    private Intent mIntent = null; 						///< Intent for start other activites
+    private static Intent mIntent = null; 						///< Intent for start other activites
 
     private BluetoothAdapter btAdapter = null;	    	///< Bluetooth standard connection adapter
 
@@ -60,64 +60,59 @@ public class BluetoothActivity extends Activity
 
     private ArrayAdapter<String> devicesListAdapter = null;	///< Contains list of bluetooth devices names and addresses
 
-    private ProgressDialog ringProgressDialog = null;	///< Waiting dialog pop-up
-
-    private final long SCAN_PERIOD = 10000;    			///< Stops scanning BLE devices after 10 seconds
-
-    private boolean mScanning = false;    				///< true if bluetooth is scanning and false other
-
-    private final String NO_DEVICE ="No devices found";	///< String used when no paired or scanning device is found
+    private static ProgressDialog ringProgressDialog = null;	///< Waiting dialog pop-up
 
     private final String WAIT_WINDOW_TITLE ="Please wait ..."; 	///< Title of the wait window
 
     private final String WAIT_WINDOW_MSG = "Connecting ..."; 	///< Text of the wait window
 
-    private final String BLEUTOOTH_CONNECTED = "Connected to ";	///< Msg when bluetooth is connected
+    private static class IncommingHandler extends Handler {
+        private final WeakReference<BluetoothActivity> mActivity;
 
-    private final String BT_NOT_SUPPORTED = "Bluetooth standard not supported";	///< Msg when bluetooth standard no supported
+        public IncommingHandler(BluetoothActivity activity) {
+            mActivity = new WeakReference<>(activity);
+        }
 
-    private final String BLEUTOOTH_NOT_SUPPORTED = "No Bluetooth available"; ///< Msg when all bluetooth not supported
-
-    private final Handler mHandler = new Handler()
-    {
         @Override
         public void handleMessage(Message msg)
         {
-            switch (msg.what)
-            {
-                case BtComm.MESSAGE_STATE_CHANGE:
-	            	/* Check if bluetooth standard is connected */
-                    switch (msg.arg1)
-                    {
-                        case BtComm.STATE_CONNECTED:
-		                	/* Stop the waiting window*/
-                            if(ringProgressDialog!=null)
-                            {
-                                ringProgressDialog.dismiss();
-                            }
-			            	/* Show connected device name in a toast */
-                            Toast.makeText(getApplicationContext(), BLEUTOOTH_CONNECTED
-                                    + mDeviceName, Toast.LENGTH_SHORT).show();
-                            mIntent.putExtra(TAG, mDeviceName);
-			            	/* Start new activity and destroy the current */
-                            startActivity(mIntent);
-                            finish();
-                            break;
-                    }
-                    break;
-                case BtComm.MESSAGE_TOAST:
-	            	/* Stop the waiting window*/
-                    if(ringProgressDialog!=null)
-                    {
-                        ringProgressDialog.dismiss();
-                    }
-	            	/* Show bluetooth message in a toast */
-                    Toast.makeText(getApplicationContext(), msg.getData().getString(BtComm.TOAST),
-                            Toast.LENGTH_SHORT).show();
-                    break;
+            BluetoothActivity activity = mActivity.get();
+            if (activity != null) {
+                switch (msg.what) {
+                    case BtComm.MESSAGE_STATE_CHANGE:
+                        // Check if bluetooth standard is connected
+                        switch (msg.arg1) {
+                            case BtComm.STATE_CONNECTED:
+                                // Stop the waiting window
+                                if (ringProgressDialog != null) {
+                                    ringProgressDialog.dismiss();
+                                }
+                                // Show connected device name in a toast
+                                String BLEUTOOTH_CONNECTED = "Connected to ";
+                                Toast.makeText(activity.getApplicationContext(), BLEUTOOTH_CONNECTED
+                                        + mDeviceName, Toast.LENGTH_SHORT).show();
+                                mIntent.putExtra(TAG, mDeviceName);
+                                // Start new activity and destroy the current
+                                activity.startActivity(mIntent);
+                                activity.finish();
+                                break;
+                        }
+                        break;
+                    case BtComm.MESSAGE_TOAST:
+                        ///Stop the waiting window
+                        if (ringProgressDialog != null) {
+                            ringProgressDialog.dismiss();
+                        }
+                        //Show bluetooth message in a toast
+                        Toast.makeText(activity.getApplicationContext(), msg.getData().getString(BtComm.TOAST),
+                                Toast.LENGTH_SHORT).show();
+                        break;
+                }
             }
         }
-    };  ///< Receive message from the bluetooth standard communication
+    }
+
+    private final IncommingHandler mHandler = new IncommingHandler(this);
 
     //////////////////////////////////////////////////////////////////////////
 	/* CLASS FUNCTIONS													 	*/
@@ -141,6 +136,7 @@ public class BluetoothActivity extends Activity
         /* Check if Bluetooth standard is supported */
         if(btAdapter == null)
         {
+            String BT_NOT_SUPPORTED = "Bluetooth standard not supported";
             Toast.makeText(this, BT_NOT_SUPPORTED, Toast.LENGTH_SHORT).show();
         }
         else
@@ -152,9 +148,9 @@ public class BluetoothActivity extends Activity
         if(BluetoothObjects.mBtComm == null)
         {
         	/* Notify user and kill application */
+            String BLEUTOOTH_NOT_SUPPORTED = "No Bluetooth available";
             Toast.makeText(this, BLEUTOOTH_NOT_SUPPORTED, Toast.LENGTH_LONG).show();
             finish();
-            return;
         }
         /* If at least one bluetoothh type is supported */
         else
@@ -211,6 +207,7 @@ public class BluetoothActivity extends Activity
         }
 
         /* Initialize list view with "no devices" */
+        String NO_DEVICE = "No devices found";
         devicesListAdapter.add(NO_DEVICE);
         listView.setAdapter(devicesListAdapter);
 

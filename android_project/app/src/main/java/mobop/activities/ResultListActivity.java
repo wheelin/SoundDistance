@@ -6,8 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -22,8 +20,12 @@ import java.util.List;
 import mobop.sounddistance.R;
 import utilities.ExpandableListAdapter;
 import utilities.FileReadWrite;
-import utilities.Measure;
 
+/** \brief
+ *  Display the list of measure stored on the external file
+ * 	\author	Emilie Gsponer
+ * 	17.11.2015
+ */
 public class ResultListActivity extends Activity {
 
     ExpandableListAdapter listAdapter;
@@ -61,6 +63,7 @@ public class ResultListActivity extends Activity {
         measureFile = new FileReadWrite();
         measureFile.CreateFile(FileReadWrite.FILE_NAME);
 
+        //Insert fake measure in file
         /*Measure measure = new Measure("test1",1,39);
         measureFile.WriteDatas(measure.measureToString());
 
@@ -78,6 +81,7 @@ public class ResultListActivity extends Activity {
 
         indexToRename = -1;
 
+        //Start measure activity
         btMeasure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,19 +89,23 @@ public class ResultListActivity extends Activity {
             }
         });
 
+        //Create long press list item dialog
         builder = new AlertDialog.Builder(this);
         builder.setItems(items, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int item) {
+                //Rename measure
                 if(item == 0)
                 {
                     mAlertDialog.show();
                 }
+                //View measure
                 else if (item == 1)
                 {
                     Intent intent = new Intent(getApplicationContext(), MeasureResultActivity.class);
                     intent.putExtra(MeasureResultActivity.IndexMeasTag,indexToRename);
                     startActivity(intent);
                 }
+                //Delete measure
                 else
                 {
                     Log.e("hello", "Delete");
@@ -119,6 +127,7 @@ public class ResultListActivity extends Activity {
             }
         });
 
+        //Create dialog to rename the measure
         helpBuilder = new AlertDialog.Builder(this);
         helpBuilder.setView(inflateLayout);
         helpBuilder.setTitle("Rename measure");
@@ -157,6 +166,7 @@ public class ResultListActivity extends Activity {
     protected void onResume() {
         super.onResume();
 
+        //No measure message
         if(measureFile.getFile().length() == 0) {
             tvEmptyMeas.setVisibility(View.VISIBLE);
             expListView.setVisibility(View.GONE);
@@ -169,6 +179,7 @@ public class ResultListActivity extends Activity {
             listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
             // setting list adapter
             expListView.setAdapter(listAdapter);
+            //Expand only one measure at time
             expListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
                 @Override
                 public void onGroupExpand(int groupPosition) {
@@ -179,6 +190,7 @@ public class ResultListActivity extends Activity {
                     lastExpandedPosition = groupPosition;
                 }
             });
+            //Get item position on long click
             expListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
                 public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -203,6 +215,7 @@ public class ResultListActivity extends Activity {
         String meas;
         measureFile = new FileReadWrite();
         measureFile.CreateFile(FileReadWrite.FILE_NAME);
+        //Read each measure to add it in the list
         do {
             child = new ArrayList<>();
             meas = measureFile.ReadDatas();
@@ -210,6 +223,7 @@ public class ResultListActivity extends Activity {
             {
                 measList.add(meas);
                 String[] array = meas.split(",");
+                //Add child and parent data
                 if(array.length == 6)
                 {
                     listDataHeader.add(array[0]);

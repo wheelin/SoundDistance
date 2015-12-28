@@ -26,7 +26,7 @@ import android.util.Log;
  * 
  * \author		Emilie Gsponer
  * \version 	1.0 
- * \date 		26.10.2015
+ * \date 		28.09.2015
  */
 
 public class FileReadWrite 
@@ -145,7 +145,7 @@ public class FileReadWrite
 	/**
 	 * \brief		Create a file in the external storage directory
 	 * 
-	 * \details		Each call of this method erase all of datas containing in the file.
+	 * \details		If the file already exist, it's just open. The data are not erase.
 	 * 
 	 * \param[in] 	fileName name of the file to write with the extension
 	 */
@@ -189,6 +189,9 @@ public class FileReadWrite
 		return file;
 	}
 
+	/**
+	 * \brief		Remove the line at the specified index
+	 */
 	public void deleteALineFromFile(int lineIndex) {
 
 		try {
@@ -231,6 +234,9 @@ public class FileReadWrite
 		}
 	}
 
+	/**
+	 * \brief		Replace a line at the given index, with the given text
+	 */
     public void replaceALineFromFile(int lineIndex, String newLine) {
 
         try {

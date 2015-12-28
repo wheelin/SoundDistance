@@ -13,6 +13,12 @@ import android.widget.TextView;
 
 import mobop.sounddistance.R;
 
+/** \brief
+ * <b> This class implement an expandable list view </b>
+ * 	\author	Emilie Gsponer
+ * 	20.09.2015
+ */
+
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     private Context _context;
