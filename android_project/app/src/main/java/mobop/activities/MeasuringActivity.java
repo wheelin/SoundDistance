@@ -1,4 +1,4 @@
-package mobop.sounddistance;
+package mobop.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,7 +16,11 @@ import java.util.Calendar;
 import java.util.regex.*;
 import java.util.Locale;
 
+import mobop.sounddistance.R;
+import utilities.BluetoothObjects;
+import utilities.BtComm;
 import utilities.FileReadWrite;
+import utilities.Measure;
 
 
 public class MeasuringActivity extends Activity {
@@ -170,13 +174,18 @@ public class MeasuringActivity extends Activity {
                         Integer.toString(Calendar.getInstance().get(Calendar.DAY_OF_MONTH)) + "/" +
                         Integer.toString(Calendar.getInstance().get(Calendar.MONTH)) + "/" +
                         Integer.toString(Calendar.getInstance().get(Calendar.YEAR));
-                meas.set_measName("measure"+ "_" +name_part);
+                meas.set_measName("measure" + "_" + name_part);
                 Log.e("Arduino measure name", "Measure saved as " + meas.get_measName());
                 meas.processMainResult();
                 fio.CreateFile(FileReadWrite.FILE_NAME);
                 fio.WriteDatas(meas.measureToString());
                 fio.CloseFile();
-                startActivity(new Intent(getApplicationContext(), ResultListActivity.class));
+
+                Intent intent = new Intent(getApplicationContext(), ResultListActivity.class);
+                //Clear activity stack
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish();
                 break;
         }
     }

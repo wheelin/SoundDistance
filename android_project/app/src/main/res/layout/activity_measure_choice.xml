@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="mobop.sounddistance.MeasureChoiceActivity"
+    tools:context="mobop.activities.MeasureChoiceActivity"
     android:layout_marginLeft="@dimen/activity_left_right_margin"
     android:layout_marginRight="@dimen/activity_left_right_margin"
     android:gravity="center"

@@ -37,5 +37,8 @@
 
     <string name="bt_rename_measure">Apply</string>
     <string name="title_activity_bluetooth">Scan paired devices</string>
+    <string name="title_activity_measure_result">Measure Result</string>
+    <string name="measure_result_title">Your measure</string>
+    <string name="measure_result_return">Return</string>
 
 </resources>

@@ -1,42 +1,45 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="mobop.sounddistance.MeasuringActivity">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="mobop.activities.ResultListActivity"
+    android:layout_marginLeft="@dimen/activity_left_right_margin"
+    android:layout_marginRight="@dimen/activity_left_right_margin"
+    android:gravity="center"
+    android:weightSum="9">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:weightSum="1">
+        android:layout_height="0dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/measuring_activity_title"
+        android:gravity="center_horizontal"
+        android:layout_weight="1"/>
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/measuring_activity_title"
-            android:id="@+id/textViewTitle"
-            android:layout_gravity="center_horizontal" />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="3.5"
+        android:id="@+id/imageViewAxis"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/three_axis" />
 
-        <ImageView
-            android:layout_width="156dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageViewAxis"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/three_axis" />
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/measuring_button_msg"
+        android:id="@+id/buttonTakeMeasure"
+        android:onClick="takeMeasure"
+        android:layout_gravity="center_horizontal" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="takeMeasure"
-            android:text="@string/measuring_button_msg"
-            android:id="@+id/buttonTakeMeasure"
-            android:layout_gravity="center_horizontal" />
-    </LinearLayout>
-
-</RelativeLayout>
+</LinearLayout>

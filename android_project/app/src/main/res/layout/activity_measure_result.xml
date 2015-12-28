@@ -1,0 +1,101 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="mobop.activities.MeasureResultActivity"
+    android:layout_marginLeft="@dimen/activity_left_right_margin"
+    android:layout_marginRight="@dimen/activity_left_right_margin"
+    android:gravity="center"
+    android:weightSum="9">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/measure_result_title"
+        android:gravity="center_horizontal"
+        android:id="@+id/tvMeasureTitle"
+        android:layout_weight="1"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/blue"
+        android:gravity="center_horizontal"
+        android:id="@+id/tvMeasureType" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/ivDistance"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/distance" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/ivVolume"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/volume" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/ivSquare"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/square" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical|center_horizontal"
+        android:weightSum="3">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/blue"
+            android:gravity="center_vertical|center_horizontal"
+            android:id="@+id/tvXMeas" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/blue"
+            android:gravity="center_vertical|center_horizontal"
+            android:id="@+id/tvYMeas" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical|center_horizontal"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/blue"
+            android:id="@+id/tvZMeas" />
+    </LinearLayout>
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/measure_result_return"
+        android:id="@+id/btReturn"
+        android:layout_gravity="center_horizontal" />
+
+</LinearLayout>

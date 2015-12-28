@@ -12,7 +12,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".ResultListActivity"
+            android:name="mobop.activities.ResultListActivity"
             android:label="@string/title_activity_result_list" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,20 +21,20 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".BtScanListActivity"
-            android:label="@string/title_activity_bt_scan_list" >
-        </activity>
-        <activity
-            android:name=".MeasureChoiceActivity"
+            android:name="mobop.activities.MeasureChoiceActivity"
             android:label="@string/title_activity_measure_choice" >
         </activity>
         <activity
-            android:name=".MeasuringActivity"
+            android:name="mobop.activities.MeasuringActivity"
             android:label="Measure Control" >
         </activity>
         <activity
-            android:name=".BluetoothActivity"
+            android:name="mobop.activities.BluetoothActivity"
             android:label="@string/title_activity_bluetooth" >
+        </activity>
+        <activity
+            android:name="mobop.activities.MeasureResultActivity"
+            android:label="@string/title_activity_measure_result" >
         </activity>
     </application>
 

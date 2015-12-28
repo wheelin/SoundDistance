@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="mobop.sounddistance.ResultListActivity"
+    tools:context="mobop.activities.ResultListActivity"
     android:layout_marginLeft="@dimen/activity_left_right_margin"
     android:layout_marginRight="@dimen/activity_left_right_margin"
     android:gravity="center"
@@ -15,7 +15,7 @@
         android:layout_height="0dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/result_list_title"
-        android:gravity="center_horizontal|center_vertical"
+        android:gravity="center_horizontal"
         android:layout_weight="1"/>
 
     <Space

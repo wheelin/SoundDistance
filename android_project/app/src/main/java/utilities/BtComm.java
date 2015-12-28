@@ -1,4 +1,4 @@
-package mobop.sounddistance;
+package utilities;
 
 import java.io.IOException;
 import java.io.InputStream;

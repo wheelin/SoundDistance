@@ -1,4 +1,4 @@
-package mobop.sounddistance;
+package utilities;
 
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
+
+import mobop.sounddistance.R;
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
 

@@ -1,4 +1,6 @@
-package mobop.sounddistance;
+package utilities;
+
+import utilities.BtComm;
 
 /** \brief
  * <b> Contains static bluetooth objects </b>

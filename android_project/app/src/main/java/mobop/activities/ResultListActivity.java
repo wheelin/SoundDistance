@@ -1,4 +1,4 @@
-package mobop.sounddistance;
+package mobop.activities;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -19,7 +19,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import mobop.sounddistance.R;
+import utilities.ExpandableListAdapter;
 import utilities.FileReadWrite;
+import utilities.Measure;
 
 public class ResultListActivity extends Activity {
 
@@ -45,6 +48,7 @@ public class ResultListActivity extends Activity {
     int indexToRename;
 
     List<String> measList;
+    private int lastExpandedPosition = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +67,7 @@ public class ResultListActivity extends Activity {
         measure = new Measure("test2",2,10,20);
         measureFile.WriteDatas(measure.measureToString());
 
-        measure = new Measure("test3",1,30);
+        measure = new Measure("test3",3,30,1,2);
         measureFile.WriteDatas(measure.measureToString());*/
 
         btMeasure = (Button) findViewById(R.id.btResultList);
@@ -90,12 +94,15 @@ public class ResultListActivity extends Activity {
                 }
                 else if (item == 1)
                 {
-
+                    Intent intent = new Intent(getApplicationContext(), MeasureResultActivity.class);
+                    intent.putExtra(MeasureResultActivity.IndexMeasTag,indexToRename);
+                    startActivity(intent);
                 }
                 else
                 {
                     Log.e("hello", "Delete");
-                    measureFile.deleteALineFromFile(indexToRename);
+                    if(indexToRename != -1 && indexToRename < measureFile.getFile().length())
+                        measureFile.deleteALineFromFile(indexToRename);
                     prepareListData();
                     if(!listDataHeader.isEmpty()) {
                         listAdapter = new ExpandableListAdapter(mActivity, listDataHeader, listDataChild);
@@ -119,7 +126,7 @@ public class ResultListActivity extends Activity {
                 new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int which) {
-                        if(indexToRename != -1)
+                        if(indexToRename != -1 && indexToRename <measList.size())
                         {
                             Log.e("hello", etRenameMeas.getText().toString());
                             String[] meas = measList.get(indexToRename).split(",");
@@ -150,14 +157,11 @@ public class ResultListActivity extends Activity {
     protected void onResume() {
         super.onResume();
 
-        Log.e("hello", "list");
-        if(measureFile.getFile().length() == 0)
-        {
+        if(measureFile.getFile().length() == 0) {
             tvEmptyMeas.setVisibility(View.VISIBLE);
             expListView.setVisibility(View.GONE);
         }
-        else
-        {
+        else {
             tvEmptyMeas.setVisibility(View.GONE);
             expListView.setVisibility(View.VISIBLE);
             // preparing list data
@@ -165,14 +169,24 @@ public class ResultListActivity extends Activity {
             listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
             // setting list adapter
             expListView.setAdapter(listAdapter);
+            expListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+                @Override
+                public void onGroupExpand(int groupPosition) {
+                    if (lastExpandedPosition != -1
+                            && groupPosition != lastExpandedPosition) {
+                        expListView.collapseGroup(lastExpandedPosition);
+                    }
+                    lastExpandedPosition = groupPosition;
+                }
+            });
             expListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
-                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                    if(ExpandableListView.getPackedPositionType(id)==ExpandableListView.PACKED_POSITION_TYPE_GROUP)
-                    {
-                        indexToRename = position;
-                        builder.show();
-                    }
+                public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    int delta = 0;
+                    if(lastExpandedPosition<i)
+                        delta = adapterView.getCount()-listDataHeader.size();
+                    indexToRename = i-delta;
+                    builder.show();
                     return false;
                 }
             });
@@ -217,60 +231,5 @@ public class ResultListActivity extends Activity {
             tvEmptyMeas.setVisibility(View.VISIBLE);
             expListView.setVisibility(View.GONE);
         }
-        /*// Adding child data
-        listDataHeader.add("Top 250");
-        listDataHeader.add("Now Showing");
-        listDataHeader.add("Coming Soon..");
-
-        // Adding child data
-        List<String> top250 = new ArrayList<String>();
-        top250.add("The Shawshank Redemption");
-        top250.add("The Godfather");
-        top250.add("The Godfather: Part II");
-        top250.add("Pulp Fiction");
-        top250.add("The Good, the Bad and the Ugly");
-        top250.add("The Dark Knight");
-        top250.add("12 Angry Men");
-
-        List<String> nowShowing = new ArrayList<String>();
-        nowShowing.add("The Conjuring");
-        nowShowing.add("Despicable Me 2");
-        nowShowing.add("Turbo");
-        nowShowing.add("Grown Ups 2");
-        nowShowing.add("Red 2");
-        nowShowing.add("The Wolverine");
-
-        List<String> comingSoon = new ArrayList<String>();
-        comingSoon.add("2 Guns");
-        comingSoon.add("The Smurfs 2");
-        comingSoon.add("The Spectacular Now");
-        comingSoon.add("The Canyons");
-        comingSoon.add("Europa Report");
-
-        listDataChild.put(listDataHeader.get(0), top250); // Header, Child data
-        listDataChild.put(listDataHeader.get(1), nowShowing);
-        listDataChild.put(listDataHeader.get(2), comingSoon);*/
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_result_list, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }

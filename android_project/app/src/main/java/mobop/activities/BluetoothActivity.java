@@ -1,4 +1,4 @@
-package mobop.sounddistance;
+package mobop.activities;
 
 import java.util.Set;
 import java.util.Vector;
@@ -7,12 +7,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothManager;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -22,6 +17,10 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import mobop.sounddistance.R;
+import utilities.BluetoothObjects;
+import utilities.BtComm;
 
 /** \brief
  * <b>Show a list of paired bluetooth device </b>
