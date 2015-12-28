@@ -64,10 +64,10 @@ public class ResultListActivity extends Activity {
         /*Measure measure = new Measure("test1",1,39);
         measureFile.WriteDatas(measure.measureToString());
 
-        measure = new Measure("test2",2,10,20);
+        measure = new Measure("test2",2,20,50);
         measureFile.WriteDatas(measure.measureToString());
 
-        measure = new Measure("test3",3,30,1,2);
+        measure = new Measure("test3",3,30,40,80);
         measureFile.WriteDatas(measure.measureToString());*/
 
         btMeasure = (Button) findViewById(R.id.btResultList);
