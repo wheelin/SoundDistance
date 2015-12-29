@@ -118,7 +118,9 @@ public class MeasuringActivity extends Activity {
             }
         }
         else
-            Toast.makeText(getApplicationContext(),"Bluetooth error, reconnect", Toast.LENGTH_SHORT).show();
+        {
+            Toast.makeText(getApplicationContext(), "Bluetooth error, reconnect", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void takeMeasure(View view){
@@ -144,7 +146,7 @@ public class MeasuringActivity extends Activity {
                 if(measureNum > 1) {
                     tts.speak(strArray[1], TextToSpeech.QUEUE_FLUSH, null, null);
                     BluetoothObjects.mBtComm.write(("meas" + '\n').getBytes());
-                    changeImage(1);
+                    changeImage(2);
                     nextIteration = false;
                 }
                 if(measureNum == 2){
@@ -152,13 +154,13 @@ public class MeasuringActivity extends Activity {
                     bt.setText("Finish");
                     currentMeasureNum += 3;
                     bt.setActivated(false);
-                } else changeImage(3);
+                } else changeImage(2);
                 break;
             case 3:
                 if(measureNum == 3) {
                     tts.speak(strArray[2], TextToSpeech.QUEUE_FLUSH, null, null);
                     BluetoothObjects.mBtComm.write(("meas" + '\n').getBytes());
-                    changeImage(2);
+                    changeImage(3);
                     tts.speak(strArray[3], TextToSpeech.QUEUE_ADD, null, null);
                     bt.setText("Finish");
                     bt.setActivated(false);
