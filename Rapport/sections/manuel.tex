@@ -68,4 +68,23 @@
 		\label{bluetooth}
 	\end{center}
 \end{figure}
-\textbf{Information: } L'activation du Bluetooth est faite automatiquement par l'application sans demander la permission par souci de simplicité d'utilisation.\\
+\textbf{Information: } L'activation du Bluetooth est faite automatiquement par l'application sans demander la permission par souci de simplicité d'utilisation.\\\\
+6. Si la connexion Bluetooth réussi, on arrive sur l'écran de mesure.
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=14cm]{img/measuring.png}
+		\caption{Réalisation des mesures}
+		\label{measuring}
+	\end{center}
+\end{figure}
+L'application sait à l'avance le nombre de mesures qu'elle doit réaliser, car nous avons configuré le type désiré. Il suffit de placer le module Arduino contre un mur et de presser le bouton Take measure.\\
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=5cm]{img/arduino.jpg}
+		\caption{Exemple de positionnement de l'Arduino}
+		\label{arduino}
+	\end{center}
+\end{figure}
+Une fois la mesure prise, l'image de la vue met en surbrillance un autre axe et l'on peut recommencer l'opération.\\ Si on a pris le nombre de mesures requises, le texte du bouton se transforme en finish et nous redirige vers l'écran avec la liste des mesures. Cet écran dispose également d'un checkbox permet d'activer le synthétiseur vocal pour nous guider dans la prise de mesures par des explications sonores.\\
+\textbf{Informations pour la mesure: } Pour que la prise de mesure se passe dans des conditions optimales, il faut le placer de sorte qu'il n'y a aucun obstacle avec le mur opposé. \\
+La taille du boitier est prise en compte par l'application Android pour ajuster la valeur mesurée.
