@@ -62,5 +62,5 @@ double getDistance()
 	delayMicroseconds(10);
 	digitalWrite(trigPin, LOW);
 	duration = pulseIn(echoPin, HIGH);
-	return (duration-120)/57;
+	return (duration+120)/57;
 }
