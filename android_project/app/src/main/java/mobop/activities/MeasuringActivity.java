@@ -9,6 +9,7 @@ import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -35,6 +36,9 @@ public class MeasuringActivity extends Activity {
     private int currentMeasureNum = 1;
     Handler h;
     Button bt;
+    CheckBox cb;
+    private boolean voiceEnabled = false;
+    private String[] strArray = new String[4];
 
     boolean nextIteration = false;
 
@@ -99,8 +103,14 @@ public class MeasuringActivity extends Activity {
         changeImage(0);
         h = new Handler();
         bt = (Button) findViewById(R.id.buttonTakeMeasure);
+        cb = (CheckBox) findViewById(R.id.enableVoiceCheckBox);
         meas = new Measure(measureNum);
         fio = new FileReadWrite();
+
+        strArray[0] = getString(R.string.first_measure_speaking);
+        strArray[1] = getString(R.string.second_measure_speaking);
+        strArray[2] = getString(R.string.third_measure_speaking);
+        strArray[3] = getString(R.string.finished_measure_speaking);
     }
 
     @Override
@@ -124,18 +134,16 @@ public class MeasuringActivity extends Activity {
     }
 
     public void takeMeasure(View view){
-        String[] strArray = {getString(R.string.first_measure_speaking),
-                getString(R.string.second_measure_speaking),
-                getString(R.string.third_measure_speaking),
-                getString(R.string.finished_measure_speaking)};
         bt.setActivated(false);
         switch (currentMeasureNum){
             case 1:
-                tts.speak(strArray[0], TextToSpeech.QUEUE_FLUSH, null, null);
+                if(voiceEnabled)
+                    tts.speak(strArray[1], TextToSpeech.QUEUE_FLUSH, null, null);
                 nextIteration = false;
                 BluetoothObjects.mBtComm.write(("meas"+'\n').getBytes());
                 if(measureNum == 1){
-                    tts.speak(strArray[3], TextToSpeech.QUEUE_ADD, null, null);
+                    if(voiceEnabled)
+                        tts.speak(strArray[3], TextToSpeech.QUEUE_ADD, null, null);
                     bt.setText("Finish");
                     currentMeasureNum += 3;
                     bt.setActivated(false);
@@ -144,13 +152,15 @@ public class MeasuringActivity extends Activity {
                 break;
             case 2:
                 if(measureNum > 1) {
-                    tts.speak(strArray[1], TextToSpeech.QUEUE_FLUSH, null, null);
+                    if(voiceEnabled)
+                        tts.speak(strArray[2], TextToSpeech.QUEUE_FLUSH, null, null);
                     BluetoothObjects.mBtComm.write(("meas" + '\n').getBytes());
                     changeImage(2);
                     nextIteration = false;
                 }
                 if(measureNum == 2){
-                    tts.speak(strArray[3], TextToSpeech.QUEUE_ADD, null, null);
+                    if(voiceEnabled)
+                        tts.speak(strArray[3], TextToSpeech.QUEUE_ADD, null, null);
                     bt.setText("Finish");
                     currentMeasureNum += 3;
                     bt.setActivated(false);
@@ -158,10 +168,11 @@ public class MeasuringActivity extends Activity {
                 break;
             case 3:
                 if(measureNum == 3) {
-                    tts.speak(strArray[2], TextToSpeech.QUEUE_FLUSH, null, null);
+
                     BluetoothObjects.mBtComm.write(("meas" + '\n').getBytes());
                     changeImage(3);
-                    tts.speak(strArray[3], TextToSpeech.QUEUE_ADD, null, null);
+                    if(voiceEnabled)
+                        tts.speak(strArray[3], TextToSpeech.QUEUE_ADD, null, null);
                     bt.setText("Finish");
                     bt.setActivated(false);
                 }
@@ -209,6 +220,18 @@ public class MeasuringActivity extends Activity {
             default:
                 img.setImageResource(R.drawable.three_axis);
                 break;
+        }
+    }
+
+    public void enableHelpVoice(View view){
+        if(cb.isChecked()){
+            voiceEnabled = true;
+        }
+        else if(!cb.isChecked()){
+            voiceEnabled = false;
+        }
+        if(voiceEnabled){
+            tts.speak(strArray[currentMeasureNum - 1], TextToSpeech.QUEUE_ADD, null, null);
         }
     }
 
