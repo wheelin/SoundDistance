@@ -28,28 +28,28 @@ import utilities.FileReadWrite;
  */
 public class ResultListActivity extends Activity {
 
-    ExpandableListAdapter listAdapter;
-    ExpandableListView expListView;
-    List<String> listDataHeader;
-    HashMap<String, List<String>> listDataChild;
+    private ExpandableListAdapter listAdapter;
+    private ExpandableListView expListView;
+    private List<String> listDataHeader;
+    private HashMap<String, List<String>> listDataChild;
 
-    Activity mActivity;
+    private Activity mActivity;
 
-    FileReadWrite measureFile;
+    private FileReadWrite measureFile;
 
-    Button btMeasure;
-    TextView tvEmptyMeas;
+    private Button btMeasure;
+    private TextView tvEmptyMeas;
 
-    final CharSequence[] items = { "Rename", "View", "Delete"};
-    AlertDialog.Builder builder;
-    AlertDialog.Builder helpBuilder;
-    AlertDialog mAlertDialog;
-    View inflateLayout;
-    EditText etRenameMeas;
+    private final CharSequence[] items = { "Rename", "View", "Delete"};
+    private AlertDialog.Builder builder;
+    private AlertDialog.Builder helpBuilder;
+    private AlertDialog mAlertDialog;
+    private View inflateLayout;
+    private EditText etRenameMeas;
 
-    int indexToRename;
+    private int indexToRename;
 
-    List<String> measList;
+    private List<String> measList;
     private int lastExpandedPosition = -1;
 
     @Override

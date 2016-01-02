@@ -23,17 +23,17 @@ public class MeasureResultActivity extends Activity {
 
     private int index;
 
-    Button btReturn;
-    TextView tvMeasureType;
-    ImageView ivDistance;
-    ImageView ivVolume;
-    ImageView ivSquare;
-    TextView tvXMeas;
-    TextView tvYMeas;
-    TextView tvZMeas;
-    TextView tvTitle;
+    private Button btReturn;
+    private TextView tvMeasureType;
+    private ImageView ivDistance;
+    private ImageView ivVolume;
+    private ImageView ivSquare;
+    private TextView tvXMeas;
+    private TextView tvYMeas;
+    private TextView tvZMeas;
+    private TextView tvTitle;
 
-    FileReadWrite measureFile;
+    private FileReadWrite measureFile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
